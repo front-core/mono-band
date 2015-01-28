@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HTML5 2D Canvas app scaffolding</title>
+    <meta name="description" content="Boilerplate & tools for 2D Canvas app development.">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+    <link rel="icon" href="images/favicon.png">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="HTML5 2D Canvas app scaffolding"><!-- TODO: Change website or app title. -->
+    <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon-precomposed.png">
+
+    <!-- TODO: Add to homescreen for Chrome on Android -->
+    <!--
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+    -->
+
+    <!-- TODO: Tile icon for Win8 (144x144 + tile color) -->
+    <!--
+    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileColor" content="#3372DF">
+    -->
+
+    <style type="text/css">
+      /* ==================================   
+         Container
+         ================================== */
+      body {
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+      }
+
+      .container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      /* ==================================   
+         Splash Screen (for Browser)
+         ================================== */
+      
+      #splash-screen {
+        background: #222;
+      }
+
+      #splash-image {
+        position: absolute;
+        top: 0; right: 0; bottom: 0; left: 0;
+        margin: auto;
+        max-width: 100%;
+        opacity: 0;
+      }
+
+      .show {
+        -webkit-animation: fadeIn .6s both;
+                animation: fadeIn .6s both;
+      }
+
+      .hide {
+        -webkit-animation: fadeOut .6s both;
+                animation: fadeOut .6s both;
+      }
+
+      @-webkit-keyframes fadeIn {
+          0% { opacity: 0; }
+        100% { opacity: 1; }
+      }
+
+      @keyframes fadeIn {
+          0% { opacity: 0; }
+        100% { opacity: 1; }
+      }
+
+      @-webkit-keyframes fadeOut {
+          0% { opacity: 1; }
+        100% { opacity: 0; }
+      }
+
+      @keyframes fadeOut {
+          0% { opacity: 1; }
+        100% { opacity: 0; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="canvas-container" class="container"></div>
+
+    <div id="splash-screen" class="container">
+      <img id="splash-image" width="209" src="images/logo-small-dark@2x.png">
+    </div>
+
+    <script>
+      if(navigator.isCocoonJS) {
+        document.body.removeChild(document.getElementById('splash-screen'));
+      } else {
+        var splashImage = document.getElementById('splash-image');
+        splashImage.addEventListener('load', function() {
+          document.getElementById('splash-image').classList.add('show');
+          window.splashImageShownTime = Date.now();
+        });
+      }
+    </script>
+
+    <!-- build:js scripts/vendor.js -->
+    <script src="bower_components/pixi.js/bin/pixi.dev.js"></script>
+    <script src="bower_components/gsap/src/uncompressed/TweenLite.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js scripts/front-core.js -->
+    <script src="scripts/front-core.js"></script>
+    <script src="scripts/front-core/event-dispatcher.js"></script>
+    <script src="scripts/front-core/scene.js"></script>
+    <script src="scripts/front-core/scene-manager.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js scripts/mono-band.js -->
+    <script src="scripts/mono-band.js"></script>
+    <script src="scripts/mono-band/scenes/intro.js"></script>
+    <script src="scripts/mono-band/scenes/menu.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js scripts/main.js -->
+    <script src="scripts/main.js"></script>
+    <!-- endbuild -->
+  </body>
+</html>
