@@ -11,19 +11,26 @@
 
 /**
  * Creates a new scene.
- * @param {!(PIXI.Stage|Object)} stage PixiJS(or other renderer) stage object.
+ * @param {!(PIXI.DisplayObjectContainer|Object)} container Display objects container of scene.
  * @constructor
  * @extends {FrontCore.EventDispatcher}
  */
-FrontCore.Scene = function(stage) {
+FrontCore.Scene = function(container) {
   FrontCore.EventDispatcher.call(this);
 
   /**
-   * The stage of scenes.
-   * @type {!(PIXI.Stage|Object)}
+   * Wether scene is loaded or not.
+   * @type {boolean}
+   * @private
+   */
+  this._loaded = false;
+
+  /**
+   * The container of display objects.
+   * @type {!(PIXI.DisplayObjectContainer|Object)}
    * @protected
    */
-  this.stage = stage;
+  this.container = container;
 
   /**
    * Scene manager object.
@@ -41,11 +48,21 @@ FrontCore.Scene.prototype.constructor = FrontCore.Scene;
  * @enum {string}
  */
 FrontCore.Scene.EventType = {
-  LOAD_COMPLETE: 'hideComplete',
+  /** Dispatched when scene assets load completed. */
+  LOAD_COMPLETE: 'loadComplete',
   /** Dispatched when show scene elements completed. */
   SHOW_COMPLETE: 'showComplete',
   /** Dispatched when hide scene elements completed. */
   HIDE_COMPLETE: 'hideComplete'
+};
+
+
+/**
+ * Wether scene is loaded or not.
+ * @return {boolean}
+ */
+FrontCore.Scene.prototype.isLoaded = function() {
+  return this._loaded;
 };
 
 
@@ -62,6 +79,7 @@ FrontCore.Scene.prototype.load = function() {
  * @protected
  */
 FrontCore.Scene.prototype.dispatchLoadCompleteEvent = function() {
+  this._loaded = true;
   this.dispatchEvent(FrontCore.Scene.EventType.LOAD_COMPLETE);
 };
 

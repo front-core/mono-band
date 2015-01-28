@@ -47,8 +47,12 @@
   var sceneManager = new FrontCore.SceneManager(stage);
 
   // TODO: Initialize Scenes.
-  sceneManager.addScene('intro', new MonoBand.Scenes.Intro(stage));
-  sceneManager.addScene('menu', new MonoBand.Scenes.Menu(stage));
+  sceneManager.addScene('intro', new MonoBand.Scenes.Intro());
+  sceneManager.addScene('menu', new MonoBand.Scenes.Menu());
+
+  sceneManager.addEventListener(FrontCore.SceneManager.EventType.SCENE_CHANGED, function(event) {
+    console.debug(event);
+  });
 
 
   // Adjust renderer size when window resized.

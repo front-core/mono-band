@@ -14,15 +14,8 @@
  * @constructor
  * @extends {FrontCore.Scene}
  */
-MonoBand.Scenes.Intro = function(stage) {
-  FrontCore.Scene.call(this, stage);
-
-  /**
-   * Asset loader.
-   * @type {PIXI.AssetLoader}
-   * @private
-   */
-  this._assetLoader;
+MonoBand.Scenes.Intro = function() {
+  FrontCore.Scene.call(this, new PIXI.DisplayObjectContainer());
 
   /**
    * Whether all the assets have loaded.
@@ -50,32 +43,26 @@ MonoBand.Scenes.Intro.prototype.constructor = MonoBand.Scenes.Intro;
 
 
 /**
- * Show scene elements.
+ * Load scene assets.
  */
-MonoBand.Scenes.Intro.prototype.show = function() {
-  if(!this._isAssetLoaded) {
+MonoBand.Scenes.Intro.prototype.load = function() {
+  if(!this._loaded) {
     this._assetLoader = new PIXI.AssetLoader([
       'images/logo-middle-light@2x.png'
     ]);
 
-    // TODO: Implement helper for scoped handler.
-    var _this = this;
-    this._assetLoader.on('onComplete', function(event) {
-      _this.handleAssetLoaderComplete.apply(_this, [event]);
-    });
+    this._assetLoader.on('onComplete', function() {
+      this.dispatchLoadCompleteEvent();
+    }.bind(this));
 
     this._assetLoader.load();
-  } else {
-    this.handleAssetLoaderComplete(null);
   }
 };
 
-
-MonoBand.Scenes.Intro.prototype.handleAssetLoaderComplete = function(event) {
-  console.debug(event);
-
-  this._isAssetLoaded = true;
-
+/**
+ * Show scene elements.
+ */
+MonoBand.Scenes.Intro.prototype.show = function() {
   // Create logo sprite.
   this._logo = new PIXI.Sprite(PIXI.Texture.fromImage('images/logo-middle-light@2x.png'));
   this._logo.anchor.x = 0.5;
@@ -83,7 +70,7 @@ MonoBand.Scenes.Intro.prototype.handleAssetLoaderComplete = function(event) {
   this._logo.position.x = window.innerWidth / 2;
   this._logo.position.y = window.innerHeight / 2;
   this._logo.scale.set(0, 0);
-  this.stage.addChild(this._logo);
+  this.container.addChild(this._logo);
 
   // Calculate logo scale(fit to window size).
   var innerRadius = Math.min(window.innerWidth, window.innerHeight);
@@ -96,7 +83,7 @@ MonoBand.Scenes.Intro.prototype.handleAssetLoaderComplete = function(event) {
   this._startButton = this.createButton_('TOUCH to START');
   this._startButton.position.x = Math.round(window.innerWidth / 2);
   this._startButton.alpha = 0;
-  this.stage.addChild(this._startButton);
+  this.container.addChild(this._startButton);
 
   var _this = this;
 
@@ -161,8 +148,8 @@ MonoBand.Scenes.Intro.prototype.hide = function() {
   TweenLite.to(this._logo, 0.8, {rotation: 0});
   TweenLite.to(this._logo.scale, 0.8, {x: 0, y: 0,
     onComplete: function() {
-      this.stage.removeChild(this._logo);
-      this.stage.removeChild(this._startButton);
+      this.container.removeChild(this._logo);
+      this.container.removeChild(this._startButton);
 
       this.dispatchHideCompleteEvent();
     },

@@ -14,12 +14,21 @@
  * @constructor
  * @extends {FrontCore.Scene}
  */
-MonoBand.Scenes.Menu = function(stage) {
-  FrontCore.Scene.call(this, stage);
+MonoBand.Scenes.Menu = function() {
+  FrontCore.Scene.call(this, new PIXI.DisplayObjectContainer());
 
 };
 MonoBand.Scenes.Menu.prototype = Object.create(FrontCore.Scene.prototype);
 MonoBand.Scenes.Menu.prototype.constructor = MonoBand.Scenes.Menu;
+
+
+/**
+ * Load scene assets.
+ */
+MonoBand.Scenes.Menu.prototype.load = function() {
+  this.dispatchLoadCompleteEvent();
+};
+
 
 /**
  * Show scene elements.

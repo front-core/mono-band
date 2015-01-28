@@ -11,10 +11,20 @@
 
 /**
  * Creates a new scene manager.
+ * @param {!(PIXI.Stage|Object)} stage PixiJS(or other renderer) stage object.
  * @constructor
  * @extends {FrontCore.EventDispatcher}
  */
-FrontCore.SceneManager = function() {
+FrontCore.SceneManager = function(stage) {
+  FrontCore.EventDispatcher.call(this);
+
+  /**
+   * Display area of scenes.
+   * @type {!(PIXI.Stage|Object)}
+   * @private
+   */
+  this._stage = stage;
+  
   /**
    * Scenes that should be managed.
    * @type {Object.<string, FrontCore.Scene>} 
@@ -24,7 +34,7 @@ FrontCore.SceneManager = function() {
 
   /**
    * Current activated scene.
-   * @type {FrontCore.Scene}
+   * @type {?FrontCore.Scene}
    * @private
    */
   this._currentScene = null;
@@ -43,6 +53,10 @@ FrontCore.SceneManager.EventType = {
 };
 
 
+/**
+ * Scene switch modes.
+ * @enum {string}
+ */
 FrontCore.SceneManager.SwitchMode = {
   PARALLEL: 'parallel',
   SERIAL: 'serial'
@@ -58,6 +72,11 @@ FrontCore.SceneManager.prototype.getCurrentScene = function() {
 };
 
 
+/**
+ * Returns the scene object.
+ * @param {string} name Name of scene.
+ * @return {FrontCore.Scene}
+ */
 FrontCore.SceneManager.prototype.getScene = function(name) {
   if(this._scenes[name]) {
     return this._scenes[name];
@@ -106,20 +125,38 @@ FrontCore.SceneManager.prototype.gotoScene = function(name, option) {
   }
 
   if(this._currentScene) {
-    this._currentScene.addEventListener(FrontCore.Scene.EventType.HIDE_COMPLETED, function(event) {
+    this._currentScene.addEventListener(FrontCore.Scene.EventType.HIDE_COMPLETE, function(event) {
+      this._stage.removeChild(event.target.container);
       console.debug(event);
-    });
+    }.bind(this));
 
     this._currentScene.hide();
   }
 
-  // TODO: シーンの切り替え方法？（hide -> show シリアル or hide/show パラレル）
+  // TODO: シーンの切り替え方法？
+  // 1. シリアル: next scene load -> prev scene hide -> next scene show
+  // 2. パラレル: next scene load -> (prev scene hide / next scene show)
 
   this._currentScene = this._scenes[name];
 
-  this._currentScene.addEventListener(FrontCore.Scene.EventType.SHOW_COMPLETED, function(event) {
+  this._currentScene.addEventListener(FrontCore.Scene.EventType.SHOW_COMPLETE, function(event) {
     console.debug(event);
-  });
 
-  this._currentScene.show();
+    this.dispatchEvent(FrontCore.SceneManager.EventType.SCENE_CHANGED);
+  }.bind(this));
+
+  if(this._currentScene.isLoaded()) {
+    this._stage.addChild(this._currentScene.container);
+    this._currentScene.show();
+  } else {
+    this._currentScene.addEventListener(FrontCore.Scene.EventType.LOAD_COMPLETE, function(event) {
+      console.debug(event);
+
+      this._stage.addChild(this._currentScene.container);
+      this._currentScene.show();
+    }.bind(this));
+
+    // TODO: 規定のローディング表示
+    this._currentScene.load();
+  }
 };
