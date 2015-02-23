@@ -139,10 +139,16 @@ FrontCore.SceneManager.prototype.gotoScene = function(name, option) {
     this._currentScene.hide();
   }
 
-  // TODO: シーンの切り替え方法？
-  // 1. シリアル: next scene load -> prev scene hide -> next scene show
-  // 2. パラレル: next scene load -> (prev scene hide / next scene show)
+  // TODO: シーン切り替えタイプの実装
+  
+  // 次のシーンがローディング済みの場合
+  // 1. シリアル: prev scene hide -> next scene show
+  // 2. パラレル: prev scene hide >< next scene show
 
+  // 次のシーンがまだローディングされて無い場合
+  // 1. シリアル: prev scene hide -> next scene load -> next scene show
+  // 2. パラレル: next scene load -> prev scene hide >< next scene show
+  
   this._currentScene = this._scenes[name];
 
   this._currentScene.addEventListener(FrontCore.Scene.EventType.SHOW_COMPLETE, function(event) {
