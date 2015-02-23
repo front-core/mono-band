@@ -10,10 +10,14 @@
  * MonoBand root namespace.
  * @namespace
  */
-var MonoBand = MonoBand || {};
+var MonoBand = {};
 
 /** 
  * MonoBand scenes.
  * @namespace
  */
-MonoBand.Scenes = MonoBand.Scenes || {};
+MonoBand.Scenes = {};
+
+MonoBand.Instruments = {};
+
+MonoBand.User = {};

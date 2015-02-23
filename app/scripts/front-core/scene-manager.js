@@ -38,6 +38,12 @@ FrontCore.SceneManager = function(stage) {
    * @private
    */
   this._currentScene = null;
+
+  /**
+   * Default preload scene.
+   * @type {?FrontCore.Scene}
+   */
+  this.preloadScene = null;
 };
 FrontCore.SceneManager.prototype = Object.create(FrontCore.EventDispatcher.prototype);
 FrontCore.SceneManager.prototype.constructor = FrontCore.SceneManager;
@@ -156,7 +162,10 @@ FrontCore.SceneManager.prototype.gotoScene = function(name, option) {
       this._currentScene.show();
     }.bind(this));
 
-    // TODO: 規定のローディング表示
+    // TODO: 規定のローディング表示（ prelaodScene が設定されていれば）
+    // また、ロード完了まで瞬時に終わったら表示しない
+    // CocoonJS の場合でも時間が掛かる場合は表示した方が良さげ
+
     this._currentScene.load();
   }
 };

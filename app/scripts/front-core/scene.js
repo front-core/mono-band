@@ -68,6 +68,7 @@ FrontCore.Scene.prototype.isLoaded = function() {
 
 /**
  * Load scene assets.
+ * また基本的な表示要素はあらけじめ container に配置しておく
  */
 FrontCore.Scene.prototype.load = function() {
   throw new Error('The type FrontCore.Scene must implement the \'load\' method.');

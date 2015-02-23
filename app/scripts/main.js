@@ -50,6 +50,9 @@
   sceneManager.addScene('intro', new MonoBand.Scenes.Intro());
   sceneManager.addScene('menu', new MonoBand.Scenes.Menu());
 
+  // TODO: Set prelaod scene.
+  // sceneManager.prelaodScene = new MonoBand.Scenes.prelaod();
+
   sceneManager.addEventListener(FrontCore.SceneManager.EventType.SCENE_CHANGED, function(event) {
     console.debug(event);
   });
@@ -61,6 +64,7 @@
 
     renderer.resize(window.innerWidth, window.innerHeight);
 
+    // TODO: SceneManager に持たせて方が良い？
     if(sceneManager.getCurrentScene()) {
       sceneManager.getCurrentScene().updateLayout();
     }
@@ -82,6 +86,7 @@
 
     renderer.resize(window.innerWidth, window.innerHeight);
 
+    // TODO: SceneManager に持たせて方が良い？
     if(sceneManager.getCurrentScene()) {
       sceneManager.getCurrentScene().updateLayout();
     }
