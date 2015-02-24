@@ -6,18 +6,49 @@
  * @author heavymery@gmail.com (Shindeok Kang)
  */
 
-/** 
+/**
  * MonoBand root namespace.
  * @namespace
  */
-var MonoBand = {};
+var MonoBand = {
+  // User: 'ユーザー情報を管理する'
+  // SessionManager: 'セッション（マルチプレイ）を管理する'
+};
 
-/** 
- * MonoBand scenes.
+/**
+ * 各シーンの名前空間
  * @namespace
  */
-MonoBand.Scenes = {};
+MonoBand.Scenes = {
+  // Preload: 'ローディング画面',
 
-MonoBand.Instruments = {};
+  // TopMenu: 'アプリ起動時に表示されるトップのメニュー画面',
 
-MonoBand.User = {};
+  // SelectInstrument: '楽器パートを選ぶ画面',
+  // SelectKey: 'キーを選ぶ画面',
+  // SelectTempo: 'テンポを選ぶ画面（ビードも？）',
+
+  // PlayGuitar: 'ギター演奏画面',
+  // PlayBass: 'ベース演奏画面',
+  // PlayKeyboard: 'キーボード演奏画面',
+  // PlayDrum: 'ドラム演奏画面',
+
+  // NameInput: '名前入力画面（セッションの参加者表示とかランキング？とかの表示に使う名前）',
+
+  // SessionMenu: 'セッションの作成/参加メニュー画面',
+  // SessionCode: '作成したセッションのコードを表示、または入力する画面',
+  // SessionLobby: 'セッションの参加者を待機する画面（作成した人がスタートできる）'
+  // ...
+};
+
+/**
+ * 楽曲モジュールの名前空間
+ * @namespace
+ */
+MonoBand.Instruments = {
+  // Guitar: 'FrontCore.WebSynth を継承して作る',
+  // Bass: 'FrontCore.WebSynth を継承して作る',
+  // Keyboard: 'FrontCore.WebSynth を継承して作る',
+  // Drum: 'FrontCore.WebAudio を組み合わせて作る'
+  // ...
+};

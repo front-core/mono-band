@@ -7,8 +7,8 @@
  */
 
 
-/** 
+/**
  * FrontCore JS library root namespace.
  * @namespace
  */
-var FrontCore = FrontCore || {};
+var FrontCore = {};
