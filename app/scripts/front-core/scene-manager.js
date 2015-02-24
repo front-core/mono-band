@@ -126,15 +126,21 @@ FrontCore.SceneManager.prototype.removeScene = function(name) {
  * @param {string} name Name of scene.
  */
 FrontCore.SceneManager.prototype.gotoScene = function(name, option) {
+  if(this.preloadScene && !this.preloadScene.isLoaded()) {
+    throw new Error('The PreloadScene is not loaded.');
+    // TODO: 別にここでロードすれば良い？
+  }
+
   if(!this._scenes[name]) {
     throw new Error('The Scene \'' + name + '\' is not exists.');
   }
 
   if(this._currentScene) {
-    this._currentScene.addEventListener(FrontCore.Scene.EventType.HIDE_COMPLETE, function(event) {
-      this._stage.removeChild(event.target.container);
-      console.debug(event);
-    }.bind(this));
+    this._currentScene.addEventListener(
+      FrontCore.Scene.EventType.HIDE_COMPLETE, function(event) {
+        this._stage.removeChild(event.target.container);
+        console.debug(event);
+      }.bind(this));
 
     this._currentScene.hide();
   }
@@ -151,18 +157,28 @@ FrontCore.SceneManager.prototype.gotoScene = function(name, option) {
   
   this._currentScene = this._scenes[name];
 
-  this._currentScene.addEventListener(FrontCore.Scene.EventType.SHOW_COMPLETE, function(event) {
-    console.debug(event);
+  this._currentScene.addEventListener(
+    FrontCore.Scene.EventType.SHOW_COMPLETE, function(event) {
+      console.debug(event);
 
-    this.dispatchEvent(FrontCore.SceneManager.EventType.SCENE_CHANGED);
-  }.bind(this));
+      this.dispatchEvent(FrontCore.SceneManager.EventType.SCENE_CHANGED);
+    }.bind(this));
 
   if(this._currentScene.isLoaded()) {
     this._stage.addChild(this._currentScene.container);
     this._currentScene.show();
   } else {
+    // TODO: EventHandler が蓄積されちゃう〜
     this._currentScene.addEventListener(FrontCore.Scene.EventType.LOAD_COMPLETE, function(event) {
       console.debug(event);
+
+       // 消えたら Stage から外す
+      this.preloadScene.addEventListener(
+        FrontCore.Scene.EventType.HIDE_COMPLETE, function(event) {
+          console.debug(event);
+          this._stage.removeChild(this.preloadScene.container);
+        }.bind(this));
+      this.preloadScene.hide();
 
       this._stage.addChild(this._currentScene.container);
       this._currentScene.show();
@@ -171,6 +187,12 @@ FrontCore.SceneManager.prototype.gotoScene = function(name, option) {
     // TODO: 規定のローディング表示（ prelaodScene が設定されていれば）
     // また、ロード完了まで瞬時に終わったら表示しない
     // CocoonJS の場合でも時間が掛かる場合は表示した方が良さげ
+    this.preloadScene.addEventListener(
+      FrontCore.Scene.EventType.SHOW_COMPLETE, function(event) {
+        console.debug(event);
+      });
+    this._stage.addChild(this.preloadScene.container);
+    this.preloadScene.show();
 
     this._currentScene.load();
   }

@@ -33,7 +33,7 @@
   var renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, {view: canvas, resolution: window.devicePixelRatio});
 
   // Create a stage.
-  var stage = new PIXI.Stage(0xffffff);
+  var stage = new PIXI.Stage(0x222222);
 
   // Render screen in every animation frame.
   var animate = function() {
@@ -47,11 +47,22 @@
   var sceneManager = new FrontCore.SceneManager(stage);
 
   // TODO: Initialize Scenes.
-  sceneManager.addScene('intro', new MonoBand.Scenes.Intro());
-  sceneManager.addScene('menu', new MonoBand.Scenes.Menu());
+  sceneManager.addScene('topMenu', new MonoBand.Scenes.TopMenu());
+//   sceneManager.addScene('selectInstrument', new MonoBand.Scenes.SelectInstrument());
+//   sceneManager.addScene('selectKey', new MonoBand.Scenes.SelectKey());
+//   sceneManager.addScene('selectTempo', new MonoBand.Scenes.SelectTempo());
+//   sceneManager.addScene('playGuitar', new MonoBand.Scenes.PlayGuitar());
+//   sceneManager.addScene('playBass', new MonoBand.Scenes.PlayBass());
+//   sceneManager.addScene('playKeyboard', new MonoBand.Scenes.PlayKeyboard());
+//   sceneManager.addScene('playDrum', new MonoBand.Scenes.PlayDrum());
+//   ...
 
-  // TODO: Set prelaod scene.
-  // sceneManager.prelaodScene = new MonoBand.Scenes.prelaod();
+  // ↓はサンプル
+  // sceneManager.addScene('intro', new MonoBand.Scenes.Menu());
+  // sceneManager.addScene('menu', new MonoBand.Scenes.Menu());
+
+  // Set prelaod scene.
+  sceneManager.preloadScene = new MonoBand.Scenes.Preload();
 
   sceneManager.addEventListener(FrontCore.SceneManager.EventType.SCENE_CHANGED, function(event) {
     console.debug(event);
@@ -92,26 +103,32 @@
     }
   }, false);
 
+  sceneManager.preloadScene.addEventListener(
+   FrontCore.Scene.EventType.LOAD_COMPLETE, function(event) {
 
-  // Hide splash screen when first scene ready.
-  if(!navigator.isCocoonJS) {
-    var fadeTime = 600;
-    var displayTime = 800;
+    // Hide splash screen when first scene ready.
+    if(!navigator.isCocoonJS) {
+      var fadeTime = 600;
+      var displayTime = 800;
 
-    // TODO: Restore splash delay.
-    // var splashDelay = displayTime + fadeTime - (Date.now() - window.splashImageShownTime);
-    var splashDelay = 0;
-
-    setTimeout(function() {
-      document.getElementById('splash-screen').classList.add('hide');
+      // TODO: Restore splash delay.
+      // var splashDelay = displayTime + fadeTime - (Date.now() - window.splashImageShownTime);
+      var splashDelay = 0;
 
       setTimeout(function() {
-        document.body.removeChild(document.getElementById('splash-screen'));
-        sceneManager.gotoScene('intro');
-      }, fadeTime);
-    }, splashDelay);
-  } else {
-    sceneManager.gotoScene('intro');
-  }
+        document.getElementById('splash-screen').classList.add('hide');
+
+        setTimeout(function() {
+          document.body.removeChild(document.getElementById('splash-screen'));
+          sceneManager.gotoScene('topMenu');
+        }, fadeTime);
+      }, splashDelay);
+    } else {
+      sceneManager.gotoScene('topMenu');
+    }
+
+   }.bind(this));
+
+  sceneManager.preloadScene.load();
 
 })();

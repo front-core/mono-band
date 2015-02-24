@@ -37,7 +37,7 @@ FrontCore.Scene = function(container) {
    * @type {?FrontCore.sceneManager}
    * @protected
    */
-  this.sceneManager = false;
+  this.sceneManager = null;
 };
 FrontCore.Scene.prototype = Object.create(FrontCore.EventDispatcher.prototype);
 FrontCore.Scene.prototype.constructor = FrontCore.Scene;

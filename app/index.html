@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>HTML5 2D Canvas app scaffolding</title>
-    <meta name="description" content="Boilerplate & tools for 2D Canvas app development.">
+    <title>MONOBAND</title>
+    <meta name="description" content="Easy Play Band App">
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 
@@ -95,7 +95,7 @@
     <div id="canvas-container" class="container"></div>
 
     <div id="splash-screen" class="container">
-      <img id="splash-image" width="209" src="images/logo-small-dark@2x.png">
+      <img id="splash-image" width="209" src="images/front-core-logo@2x.png">
     </div>
 
     <script>
@@ -113,6 +113,9 @@
     <!-- build:js scripts/vendor.js -->
     <script src="bower_components/pixi.js/bin/pixi.dev.js"></script>
     <script src="bower_components/gsap/src/uncompressed/TweenLite.js"></script>
+    <script src="bower_components/gsap/src/uncompressed/TweenMax.js"></script>
+    <script src="bower_components/gsap/src/uncompressed/TimelineLite.js"></script>
+    <script src="bower_components/gsap/src/uncompressed/timelineMax.js"></script>
     <!-- endbuild -->
 
     <!-- build:js scripts/front-core.js -->
@@ -124,8 +127,9 @@
 
     <!-- build:js scripts/mono-band.js -->
     <script src="scripts/mono-band.js"></script>
-    <script src="scripts/mono-band/scenes/intro.js"></script>
-    <script src="scripts/mono-band/scenes/menu.js"></script>
+    <script src="scripts/mono-band/scenes/preload.js"></script>
+    <script src="scripts/mono-band/scenes/top-menu.js"></script>
+    <script src="scripts/mono-band/scenes/select-instrument.js"></script>
     <!-- endbuild -->
 
     <!-- build:js scripts/main.js -->

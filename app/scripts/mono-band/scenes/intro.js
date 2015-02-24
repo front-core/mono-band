@@ -46,7 +46,7 @@ MonoBand.Scenes.Intro.prototype.constructor = MonoBand.Scenes.Intro;
  * Load scene assets.
  */
 MonoBand.Scenes.Intro.prototype.load = function() {
-  if(!this._loaded) {
+  if(!this.isLoaded()) {
     this._assetLoader = new PIXI.AssetLoader([
       'images/logo-middle-light@2x.png'
     ]);
@@ -80,7 +80,7 @@ MonoBand.Scenes.Intro.prototype.show = function() {
   );
 
   // Create start button.
-  this._startButton = this.createButton_('TOUCH to START');
+  this._startButton = this._createButton('TOUCH to START');
   this._startButton.position.x = Math.round(window.innerWidth / 2);
   this._startButton.alpha = 0;
   this.container.addChild(this._startButton);
@@ -111,7 +111,7 @@ MonoBand.Scenes.Intro.prototype.show = function() {
  * @return {PIXI.DisplayObjectContainer} Button display object.
  * @private
  */
-MonoBand.Scenes.Intro.prototype.createButton_ = function(text) {
+MonoBand.Scenes.Intro.prototype._createButton = function(text) {
   var button = new PIXI.DisplayObjectContainer();
 
   var background = new PIXI.Graphics();
