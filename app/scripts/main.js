@@ -109,11 +109,11 @@
     // Hide splash screen when first scene ready.
     if(!navigator.isCocoonJS) {
       var fadeTime = 600;
-      var displayTime = 800;
+      var displayTime = 600;
 
       // TODO: Restore splash delay.
-      // var splashDelay = displayTime + fadeTime - (Date.now() - window.splashImageShownTime);
-      var splashDelay = 0;
+      var splashDelay = displayTime + fadeTime - (Date.now() - window.splashImageShownTime);
+//       var splashDelay = 0;
 
       setTimeout(function() {
         document.getElementById('splash-screen').classList.add('hide');

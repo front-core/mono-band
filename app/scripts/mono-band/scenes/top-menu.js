@@ -34,34 +34,31 @@ MonoBand.Scenes.TopMenu.prototype.constructor = MonoBand.Scenes.TopMenu;
  * Load scene assets.
  */
 MonoBand.Scenes.TopMenu.prototype.load = function() {
-
   if(!this.isLoaded()) {
+    var suffix = window.devicePixelRatio > 1 ? '@' + Math.round(window.devicePixelRatio) + 'x' : '';
+
     this._assetLoader = new PIXI.AssetLoader([
-      'images/logo@2x.png',
-      'images/slogan@2x.png',
-      'images/solo-button@2x.png',
-      'images/session-button@2x.png'
+      FrontCore.PIXI.getSuffixedImageUrl('images/logo.png'),
+      FrontCore.PIXI.getSuffixedImageUrl('images/slogan.png'),
+      FrontCore.PIXI.getSuffixedImageUrl('images/solo-button.png'),
+      FrontCore.PIXI.getSuffixedImageUrl('images/session-button.png')
     ]);
 
     this._assetLoader.on('onComplete', function() {
-      this._logo = new PIXI.Sprite(PIXI.Texture.fromImage('images/logo@2x.png'));
+      this._logo = new PIXI.Sprite(FrontCore.PIXI.getTexture('images/logo.png'));
       this._logo.anchor.x = 0.5;
       this._logo.anchor.y = 0.5;
       this._logo.alpha = 0;
 
-      this._slogan = new PIXI.Sprite(PIXI.Texture.fromImage('images/slogan@2x.png'));
+      this._slogan = new PIXI.Sprite(FrontCore.PIXI.getTexture('images/slogan.png'));
       this._slogan.anchor.x = 0.5;
       this._slogan.anchor.y = 0.5;
       this._slogan.alpha = 0;
 
-      this._soloButton = new PIXI.Sprite(PIXI.Texture.fromImage('images/solo-button@2x.png'));
-      this._soloButton.anchor.x = 0.5;
-      this._soloButton.anchor.y = 0.5;
+      this._soloButton = FrontCore.PIXI.getTextureButton(FrontCore.PIXI.getTexture('images/solo-button.png'));
       this._soloButton.alpha = 0;
 
-      this._sessionButton = new PIXI.Sprite(PIXI.Texture.fromImage('images/session-button@2x.png'));
-      this._sessionButton.anchor.x = 0.5;
-      this._sessionButton.anchor.y = 0.5;
+      this._sessionButton = FrontCore.PIXI.getTextureButton(FrontCore.PIXI.getTexture('images/session-button.png'));
       this._sessionButton.alpha = 0;
 
       this.container.addChild(this._logo);
@@ -97,7 +94,7 @@ MonoBand.Scenes.TopMenu.prototype.show = function() {
     alpha: 1,
     x: window.innerWidth / 2,
     y: 100,
-  }));
+  }), 'logoShow');
 
   timeline.add(TweenLite.fromTo(this._slogan, 0.3, { 
     alpha: 0,
@@ -107,7 +104,7 @@ MonoBand.Scenes.TopMenu.prototype.show = function() {
     alpha: 1,
     x: window.innerWidth / 2,
     y: 130
-  }));
+  }), 'logoShow+=0.3');
 
   timeline.add(TweenLite.fromTo(this._soloButton, 0.3, { 
     alpha: 0,
@@ -117,7 +114,7 @@ MonoBand.Scenes.TopMenu.prototype.show = function() {
     alpha: 1,
     x: window.innerWidth / 2,
     y: window.innerHeight - 150
-  }));
+  }), 'soloButtonShow');
 
   timeline.add(TweenLite.fromTo(this._sessionButton, 0.3, { 
     alpha: 0,
@@ -127,7 +124,7 @@ MonoBand.Scenes.TopMenu.prototype.show = function() {
     alpha: 1,
     x: window.innerWidth / 2,
     y: window.innerHeight - 100
-  }));
+  }),'soloButtonShow+=0.1');
 
 };
 

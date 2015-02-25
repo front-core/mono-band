@@ -33,11 +33,11 @@ MonoBand.Scenes.Preload.prototype.constructor = MonoBand.Scenes.Preload;
 MonoBand.Scenes.Preload.prototype.load = function() {
   if(!this.isLoaded()) {
     this._assetLoader = new PIXI.AssetLoader([
-      'images/loading-circle@2x.png'
+      FrontCore.PIXI.getSuffixedImageUrl('images/loading-circle.png')
     ]);
 
     this._assetLoader.on('onComplete', function() {
-      this._loadingCircle = new PIXI.Sprite(PIXI.Texture.fromImage('images/loading-circle@2x.png'));
+      this._loadingCircle = new PIXI.Sprite(FrontCore.PIXI.getTexture('images/loading-circle.png'));
       this._loadingCircle.anchor.x = 0.5;
       this._loadingCircle.anchor.y = 0.5;
       this._loadingCircle.alpha = 0;
