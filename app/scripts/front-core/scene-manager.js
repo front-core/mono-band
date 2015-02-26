@@ -140,60 +140,115 @@ FrontCore.SceneManager.prototype.gotoScene = function(name, option) {
       FrontCore.Scene.EventType.HIDE_COMPLETE, function(event) {
         this._stage.removeChild(event.target.container);
         console.debug(event);
-      }.bind(this));
+
+        // TODO: シーン切り替えタイプの実装
+
+        // 次のシーンがローディング済みの場合
+        // 1. シリアル: prev scene hide -> next scene show
+        // 2. パラレル: prev scene hide >< next scene show
+
+        // 次のシーンがまだローディングされて無い場合
+        // 1. シリアル: prev scene hide -> next scene load -> next scene show
+        // 2. パラレル: next scene load -> prev scene hide >< next scene show
+
+        this._currentScene = this._scenes[name];
+
+        this._currentScene.addEventListener(
+          FrontCore.Scene.EventType.SHOW_COMPLETE, function(event) {
+            console.debug(event);
+
+            this.dispatchEvent(FrontCore.SceneManager.EventType.SCENE_CHANGED);
+          }.bind(this), true);
+
+        if(this._currentScene.isLoaded()) {
+          this._stage.addChild(this._currentScene.container);
+          this._currentScene.show();
+        } else {
+          // TODO: EventHandler が蓄積されちゃう〜
+          this._currentScene.addEventListener(FrontCore.Scene.EventType.LOAD_COMPLETE, function(event) {
+            console.debug(event);
+
+             // 消えたら Stage から外す
+            this.preloadScene.addEventListener(
+              FrontCore.Scene.EventType.HIDE_COMPLETE, function(event) {
+                console.debug(event);
+                this._stage.removeChild(this.preloadScene.container);
+              }.bind(this), true);
+            this.preloadScene.hide();
+
+            this._stage.addChild(this._currentScene.container);
+            this._currentScene.show();
+          }.bind(this));
+
+          // TODO: 規定のローディング表示（ prelaodScene が設定されていれば）
+          // また、ロード完了まで瞬時に終わったら表示しない
+          // CocoonJS の場合でも時間が掛かる場合は表示した方が良さげ
+          this.preloadScene.addEventListener(
+            FrontCore.Scene.EventType.SHOW_COMPLETE, function(event) {
+              console.debug(event);
+            }, true);
+          this._stage.addChild(this.preloadScene.container);
+          this.preloadScene.show();
+
+          this._currentScene.load();
+        }
+
+
+      }.bind(this), true);
 
     this._currentScene.hide();
-  }
-
-  // TODO: シーン切り替えタイプの実装
-  
-  // 次のシーンがローディング済みの場合
-  // 1. シリアル: prev scene hide -> next scene show
-  // 2. パラレル: prev scene hide >< next scene show
-
-  // 次のシーンがまだローディングされて無い場合
-  // 1. シリアル: prev scene hide -> next scene load -> next scene show
-  // 2. パラレル: next scene load -> prev scene hide >< next scene show
-  
-  this._currentScene = this._scenes[name];
-
-  this._currentScene.addEventListener(
-    FrontCore.Scene.EventType.SHOW_COMPLETE, function(event) {
-      console.debug(event);
-
-      this.dispatchEvent(FrontCore.SceneManager.EventType.SCENE_CHANGED);
-    }.bind(this));
-
-  if(this._currentScene.isLoaded()) {
-    this._stage.addChild(this._currentScene.container);
-    this._currentScene.show();
   } else {
-    // TODO: EventHandler が蓄積されちゃう〜
-    this._currentScene.addEventListener(FrontCore.Scene.EventType.LOAD_COMPLETE, function(event) {
-      console.debug(event);
 
-       // 消えたら Stage から外す
-      this.preloadScene.addEventListener(
-        FrontCore.Scene.EventType.HIDE_COMPLETE, function(event) {
-          console.debug(event);
-          this._stage.removeChild(this.preloadScene.container);
-        }.bind(this));
-      this.preloadScene.hide();
+    // TODO: シーン切り替えタイプの実装
 
-      this._stage.addChild(this._currentScene.container);
-      this._currentScene.show();
-    }.bind(this));
+    // 次のシーンがローディング済みの場合
+    // 1. シリアル: prev scene hide -> next scene show
+    // 2. パラレル: prev scene hide >< next scene show
 
-    // TODO: 規定のローディング表示（ prelaodScene が設定されていれば）
-    // また、ロード完了まで瞬時に終わったら表示しない
-    // CocoonJS の場合でも時間が掛かる場合は表示した方が良さげ
-    this.preloadScene.addEventListener(
+    // 次のシーンがまだローディングされて無い場合
+    // 1. シリアル: prev scene hide -> next scene load -> next scene show
+    // 2. パラレル: next scene load -> prev scene hide >< next scene show
+
+    this._currentScene = this._scenes[name];
+
+    this._currentScene.addEventListener(
       FrontCore.Scene.EventType.SHOW_COMPLETE, function(event) {
         console.debug(event);
-      });
-    this._stage.addChild(this.preloadScene.container);
-    this.preloadScene.show();
 
-    this._currentScene.load();
+        this.dispatchEvent(FrontCore.SceneManager.EventType.SCENE_CHANGED);
+      }.bind(this), true);
+
+    if(this._currentScene.isLoaded()) {
+      this._stage.addChild(this._currentScene.container);
+      this._currentScene.show();
+    } else {
+      // TODO: EventHandler が蓄積されちゃう〜
+      this._currentScene.addEventListener(FrontCore.Scene.EventType.LOAD_COMPLETE, function(event) {
+        console.debug(event);
+
+         // 消えたら Stage から外す
+        this.preloadScene.addEventListener(
+          FrontCore.Scene.EventType.HIDE_COMPLETE, function(event) {
+            console.debug(event);
+            this._stage.removeChild(this.preloadScene.container);
+          }.bind(this), true);
+        this.preloadScene.hide();
+
+        this._stage.addChild(this._currentScene.container);
+        this._currentScene.show();
+      }.bind(this));
+
+      // TODO: 規定のローディング表示（ prelaodScene が設定されていれば）
+      // また、ロード完了まで瞬時に終わったら表示しない
+      // CocoonJS の場合でも時間が掛かる場合は表示した方が良さげ
+      this.preloadScene.addEventListener(
+        FrontCore.Scene.EventType.SHOW_COMPLETE, function(event) {
+          console.debug(event);
+        }, true);
+      this._stage.addChild(this.preloadScene.container);
+      this.preloadScene.show();
+
+      this._currentScene.load();
+    }
   }
 };

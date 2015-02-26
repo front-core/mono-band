@@ -1,14 +1,14 @@
 'use strict';
 
 /**
- * @fileoverview TopMenu scene.
+ * @fileoverview TopMenu シーン（トップのメニュー画面）を定義します。
  *
  * @author heavymery@gmail.com (Shindeok Kang)
  */
 
 
 /**
- * Creates a new menu TopMenu scene.
+ * 新しい TopMenu クラスのインスタンスを生成します。
  * @constructor
  * @extends {FrontCore.Scene}
  */
@@ -23,13 +23,15 @@ MonoBand.Scenes.TopMenu = function() {
 
   this._sessionButton;
 
+  this._showTimeline;
+
 };
 MonoBand.Scenes.TopMenu.prototype = Object.create(FrontCore.Scene.prototype);
 MonoBand.Scenes.TopMenu.prototype.constructor = MonoBand.Scenes.TopMenu;
 
 
 /**
- * Load scene assets.
+ * シーンで表示するデータおよび表示要素を初期化します。
  */
 MonoBand.Scenes.TopMenu.prototype.load = function() {
   if(!this.isLoaded()) {
@@ -53,6 +55,9 @@ MonoBand.Scenes.TopMenu.prototype.load = function() {
 
       this._soloButton = FrontCore.PIXI.getTextureButton(FrontCore.PIXI.getTexture('images/solo-button.png'));
       this._soloButton.alpha = 0;
+      this._soloButton.click = this._soloButton.tap = function() {
+        this.sceneManager.gotoScene('selectInstrument');
+      }.bind(this);
 
       this._sessionButton = FrontCore.PIXI.getTextureButton(FrontCore.PIXI.getTexture('images/session-button.png'));
       this._sessionButton.alpha = 0;
@@ -61,6 +66,56 @@ MonoBand.Scenes.TopMenu.prototype.load = function() {
       this.container.addChild(this._slogan);
       this.container.addChild(this._soloButton);
       this.container.addChild(this._sessionButton);
+
+      this._showTimeline = new TimelineLite({ 
+        paused: true,
+        onComplete: function() {
+          this.dispatchShowCompleteEvent();
+        }, onCompleteScope: this,
+        onReverseComplete: function() {
+            this.dispatchHideCompleteEvent();
+          }, onReverseCompleteScope: this
+        });
+
+      this._showTimeline.add(TweenLite.fromTo(this._logo, 0.4, { 
+        alpha: 0,
+        x: window.innerWidth / 2,
+        y: 0
+      }, { 
+        alpha: 1,
+        x: window.innerWidth / 2,
+        y: 100,
+      }), 'logoShow');
+
+      this._showTimeline.add(TweenLite.fromTo(this._slogan, 0.3, { 
+        alpha: 0,
+        x: 0,
+        y: 130
+      }, { 
+        alpha: 1,
+        x: window.innerWidth / 2,
+        y: 130
+      }), 'logoShow+=0.3');
+
+      this._showTimeline.add(TweenLite.fromTo(this._soloButton, 0.3, { 
+        alpha: 0,
+        x: window.innerWidth / 2,
+        y: window.innerHeight
+      }, { 
+        alpha: 1,
+        x: window.innerWidth / 2,
+        y: window.innerHeight - 150
+      }), 'soloButtonShow');
+
+      this._showTimeline.add(TweenLite.fromTo(this._sessionButton, 0.3, { 
+        alpha: 0,
+        x: window.innerWidth / 2,
+        y: window.innerHeight
+      }, { 
+        alpha: 1,
+        x: window.innerWidth / 2,
+        y: window.innerHeight - 100
+      }),'soloButtonShow+=0.1');
 
       // 遅延テスト
       setTimeout(function() {
@@ -74,67 +129,23 @@ MonoBand.Scenes.TopMenu.prototype.load = function() {
 
 
 /**
- * Show scene elements.
+ * シーンの表示要素を表示します。
  */
 MonoBand.Scenes.TopMenu.prototype.show = function() {
-
-  var timeline = new TimelineLite({ onComplete: function() {
-    this.dispatchShowCompleteEvent();
-  }, onCompleteScope: this });
-
-  timeline.add(TweenLite.fromTo(this._logo, 0.4, { 
-    alpha: 0,
-    x: window.innerWidth / 2,
-    y: 0
-  }, { 
-    alpha: 1,
-    x: window.innerWidth / 2,
-    y: 100,
-  }), 'logoShow');
-
-  timeline.add(TweenLite.fromTo(this._slogan, 0.3, { 
-    alpha: 0,
-    x: 0,
-    y: 130
-  }, { 
-    alpha: 1,
-    x: window.innerWidth / 2,
-    y: 130
-  }), 'logoShow+=0.3');
-
-  timeline.add(TweenLite.fromTo(this._soloButton, 0.3, { 
-    alpha: 0,
-    x: window.innerWidth / 2,
-    y: window.innerHeight
-  }, { 
-    alpha: 1,
-    x: window.innerWidth / 2,
-    y: window.innerHeight - 150
-  }), 'soloButtonShow');
-
-  timeline.add(TweenLite.fromTo(this._sessionButton, 0.3, { 
-    alpha: 0,
-    x: window.innerWidth / 2,
-    y: window.innerHeight
-  }, { 
-    alpha: 1,
-    x: window.innerWidth / 2,
-    y: window.innerHeight - 100
-  }),'soloButtonShow+=0.1');
-
+  this._showTimeline.play();
 };
 
 
 /**
- * Hide scene elements.
+ * シーンの表示要素を非表示します。
  */
 MonoBand.Scenes.TopMenu.prototype.hide = function() {
-  this.dispatchHideCompleteEvent();
+ this._showTimeline.reverse();
 };
 
 
 /**
- * Update scene elements layout.
+ * シーンの表示要素のレイアウトを更新します。
  */
 MonoBand.Scenes.TopMenu.prototype.updateLayout = function() {
 

@@ -24,15 +24,32 @@ FrontCore.EventDispatcher.prototype.constructor = FrontCore.EventDispatcher;
  * @param {string} type Event type.
  * @param {function} listener Listener function.
  */
-FrontCore.EventDispatcher.prototype.addEventListener = function(type, listener) {
+FrontCore.EventDispatcher.prototype.addEventListener = function(type, listener, once) {
   if (typeof this._listeners[type] === 'undefined') {
     this._listeners[type] = [];
   }
 
   var listenersOfType = this._listeners[type];
 
+  var listenerWrapper;
+
+  if(once) {
+    listenerWrapper = function(event) {
+
+      listener.call(event.target, event);
+
+      var index = listenersOfType.indexOf(listenerWrapper);
+
+      if(index > - 1) {
+        listenersOfType.splice(index, 1);
+      }
+    };
+  } else {
+    listenerWrapper = listener;
+  }
+
   if (listenersOfType.indexOf(listener) < 0) {
-    listenersOfType.push(listener);
+    listenersOfType.push(listenerWrapper);
   }
 };
 

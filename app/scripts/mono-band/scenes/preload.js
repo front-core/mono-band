@@ -1,14 +1,14 @@
 'use strict';
 
 /**
- * @fileoverview Preload scene.
+ * @fileoverview Preload シーン（ローディング画面）を定義します。
  *
  * @author heavymery@gmail.com (Shindeok Kang)
  */
 
 
 /**
- * Creates a new Preload scene.
+ * 新しい Preload クラスのインスタンスを生成します。
  * @constructor
  * @extends {FrontCore.Scene}
  */
@@ -26,7 +26,7 @@ MonoBand.Scenes.Preload.prototype.constructor = MonoBand.Scenes.Preload;
 
 
 /**
- * Load scene assets.
+ * シーンで表示するデータおよび表示要素を初期化します。
  */
 MonoBand.Scenes.Preload.prototype.load = function() {
   if(!this.isLoaded()) {
@@ -77,7 +77,7 @@ MonoBand.Scenes.Preload.prototype.load = function() {
 
 
 /**
- * Show scene elements.
+ * シーンの表示要素を表示します。
  */
 MonoBand.Scenes.Preload.prototype.show = function() {
   this._rotationTween.play();
@@ -86,7 +86,7 @@ MonoBand.Scenes.Preload.prototype.show = function() {
 
 
 /**
- * Hide scene elements.
+ * シーンの表示要素を非表示します。
  */
 MonoBand.Scenes.Preload.prototype.hide = function() {
   this._rotationTween.pause();
@@ -95,7 +95,7 @@ MonoBand.Scenes.Preload.prototype.hide = function() {
 
 
 /**
- * Update scene elements layout.
+ * シーンの表示要素のレイアウトを更新します。
  */
 MonoBand.Scenes.Preload.prototype.updateLayout = function() {
 

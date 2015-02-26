@@ -45,7 +45,7 @@
 
   // TODO: MonoBand で使われるシーンを登録
   sceneManager.addScene('topMenu', new MonoBand.Scenes.TopMenu());
-//   sceneManager.addScene('selectInstrument', new MonoBand.Scenes.SelectInstrument());
+  sceneManager.addScene('selectInstrument', new MonoBand.Scenes.SelectInstrument());
 //   sceneManager.addScene('selectKey', new MonoBand.Scenes.SelectKey());
 //   sceneManager.addScene('selectTempo', new MonoBand.Scenes.SelectTempo());
 //   sceneManager.addScene('playGuitar', new MonoBand.Scenes.PlayGuitar());

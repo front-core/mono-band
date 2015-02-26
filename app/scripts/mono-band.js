@@ -13,7 +13,7 @@
  * MonoBand のコアクラスとグローバル関数が含まれます。
  * @namespace
  */
-var MonoBand = {};
+var MonoBand = MonoBand || {};
 
 /**
  * MonoBand の各シーンクラスが含まれます。
@@ -45,10 +45,4 @@ MonoBand.Scenes = {
  * 楽曲モジュールの名前空間
  * @namespace
  */
-MonoBand.Instruments = {
-  // Guitar: 'FrontCore.WebSynth を継承して作る',
-  // Bass: 'FrontCore.WebSynth を継承して作る',
-  // Keyboard: 'FrontCore.WebSynth を継承して作る',
-  // Drum: 'FrontCore.WebAudio を組み合わせて作る'
-  // ...
-};
+MonoBand.Instruments = {};
