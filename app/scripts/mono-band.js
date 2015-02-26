@@ -1,22 +1,22 @@
+/* global MonoBand:true */
+
 'use strict';
 
 /**
- * @fileoverview Bootstrap for MonoBand.
+ * @fileoverview MonoBand の名前空間を定義します。
  *
  * @author heavymery@gmail.com (Shindeok Kang)
  */
 
-/**
- * MonoBand root namespace.
- * @namespace
- */
-var MonoBand = {
-  // User: 'ユーザー情報を管理する'
-  // SessionManager: 'セッション（マルチプレイ）を管理する'
-};
 
 /**
- * 各シーンの名前空間
+ * MonoBand のコアクラスとグローバル関数が含まれます。
+ * @namespace
+ */
+var MonoBand = {};
+
+/**
+ * MonoBand の各シーンクラスが含まれます。
  * @namespace
  */
 MonoBand.Scenes = {

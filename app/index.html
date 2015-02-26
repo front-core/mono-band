@@ -8,22 +8,16 @@
 
     <link rel="icon" href="images/favicon.png">
 
-    <!-- Add to homescreen for Safari on iOS -->
+    <!-- iOS Safari の「ホーム画面に追加」用のアイコン -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="HTML5 2D Canvas app scaffolding"><!-- TODO: Change website or app title. -->
+    <meta name="apple-mobile-web-app-title" content="MONOBAND - Easy Play Band App">
     <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon-precomposed.png">
 
-    <!-- TODO: Add to homescreen for Chrome on Android -->
+    <!-- TODO: Android Chrome の「ホーム画面に追加」用のアイコン -->
     <!--
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
-    -->
-
-    <!-- TODO: Tile icon for Win8 (144x144 + tile color) -->
-    <!--
-    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
-    <meta name="msapplication-TileColor" content="#3372DF">
     -->
 
     <style type="text/css">
@@ -44,7 +38,7 @@
       }
 
       /* ==================================   
-         Splash Screen (for Browser)
+         Splash Screen (ブラウザで実行される時)
          ================================== */
       
       #splash-screen {
@@ -92,24 +86,22 @@
   </head>
 
   <body>
+    <!-- Canvas が追加される場所 -->
     <div id="canvas-container" class="container"></div>
+    <!-- /Canvas が追加される場所 -->
 
+    <!-- スプラッシュスクリーン（ブラウザで実行される時に表示される） -->
     <div id="splash-screen" class="container">
       <img id="splash-image" width="209" src="images/front-core-logo@2x.png">
-
-<!--       <img width="400" src="images/session-button@3x.png"> -->
-<!--       <img width="400" height="80" src="images/session-button@2x.png"> -->
-<!--       <img width="400" src="images/session-button.png"> -->
-
-<!--       <img width="400" src="images/solo-button@3x.png"> -->
-<!--       <img width="400" height="80" src="images/solo-button@2x.png"> -->
-<!--       <img width="400" src="images/solo-button.png"> -->
     </div>
+    <!-- /スプラッシュスクリーン -->
 
     <script>
       if(navigator.isCocoonJS) {
+        // CocoonJS だったらスプラッシュスクリーンは要らない
         document.body.removeChild(document.getElementById('splash-screen'));
       } else {
+        // スプラッシュスクリーンをフェードイン表示
         var splashImage = document.getElementById('splash-image');
         splashImage.addEventListener('load', function() {
           document.getElementById('splash-image').classList.add('show');
@@ -117,7 +109,8 @@
         });
       }
     </script>
-
+  
+    <!-- 外部の JS ライブラリ -->
     <!-- build:js scripts/vendor.js -->
     <script src="bower_components/pixi.js/bin/pixi.dev.js"></script>
     <script src="bower_components/gsap/src/uncompressed/TweenLite.js"></script>
@@ -125,7 +118,9 @@
     <script src="bower_components/gsap/src/uncompressed/TimelineLite.js"></script>
     <script src="bower_components/gsap/src/uncompressed/timelineMax.js"></script>
     <!-- endbuild -->
+    <!-- /外部の JS ライブラリ -->
 
+    <!-- FrontCore JS ライブラリ -->
     <!-- build:js scripts/front-core.js -->
     <script src="scripts/front-core.js"></script>
     <script src="scripts/front-core/event-dispatcher.js"></script>
@@ -133,14 +128,34 @@
     <script src="scripts/front-core/scene-manager.js"></script>
     <script src="scripts/front-core/pixi.js"></script>
     <!-- endbuild -->
+    <!-- /FrontCore JS ライブラリ -->
 
+    <!-- MonoBand JS ライブラリ -->
     <!-- build:js scripts/mono-band.js -->
     <script src="scripts/mono-band.js"></script>
+    <script src="scripts/mono-band/user.js"></script>
+    <script src="scripts/mono-band/session-manager.js"></script>
     <script src="scripts/mono-band/scenes/preload.js"></script>
     <script src="scripts/mono-band/scenes/top-menu.js"></script>
     <script src="scripts/mono-band/scenes/select-instrument.js"></script>
+    <script src="scripts/mono-band/scenes/select-tempo.js"></script>
+    <script src="scripts/mono-band/scenes/select-key.js"></script>
+    <script src="scripts/mono-band/scenes/play-guitar.js"></script>
+    <script src="scripts/mono-band/scenes/play-bass.js"></script>
+    <script src="scripts/mono-band/scenes/play-drum.js"></script>
+    <script src="scripts/mono-band/scenes/play-keyboard.js"></script>
+    <script src="scripts/mono-band/scenes/name-input.js"></script>
+    <script src="scripts/mono-band/scenes/session-menu.js"></script>
+    <script src="scripts/mono-band/scenes/session-code.js"></script>
+    <script src="scripts/mono-band/scenes/session-lobby.js"></script>
+    <script src="scripts/mono-band/instruments/guitar.js"></script>
+    <script src="scripts/mono-band/instruments/bass.js"></script>
+    <script src="scripts/mono-band/instruments/drum.js"></script>
+    <script src="scripts/mono-band/instruments/keyboard.js"></script>
     <!-- endbuild -->
+    <!-- /MonoBand JS ライブラリ -->
 
+    <!-- メインスクリプト（エントリポイント） -->
     <!-- build:js scripts/main.js -->
     <script src="scripts/main.js"></script>
     <!-- endbuild -->

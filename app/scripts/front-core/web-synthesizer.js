@@ -1,6 +1,6 @@
-/* global FrontCore:false */
-
 'use strict';
+
+// TODO: ドキュメント日本語で
 
 /**
  * @fileoverview Web Audio Synthesizer implementation.

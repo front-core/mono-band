@@ -1,6 +1,6 @@
-/* global FrontCore:false */
-
 'use strict';
+
+// TODO: ドキュメント日本語で
 
 /**
  * @fileoverview Manage multiple scene objects.

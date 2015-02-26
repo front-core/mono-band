@@ -1,4 +1,10 @@
-/* global FrontCore:false, PIXI:false */
+'use strict';
+
+/**
+ * @fileoverview PixiJS 用のヘルパー関数を定義します。
+ *
+ * @author heavymery@gmail.com (Shindeok Kang)
+ */
 
 
 /**
@@ -26,7 +32,7 @@ FrontCore.PIXI.getSuffixedImageUrl = function(imageUrl) {
 /**
  * 指定された画像 URL から、端末のピクセル比に対応した Texture オブジェクトを返します。
  * @param {string} imageUrl - 画像 URL
- * @return {PIXI.Texture} imageUrl -  PixiJS Texture オブジェクト
+ * @return {PIXI.Texture} Texture オブジェクト
  */
 FrontCore.PIXI.getTexture = function(imageUrl) {
   var texture = PIXI.Texture.fromImage(
@@ -38,7 +44,14 @@ FrontCore.PIXI.getTexture = function(imageUrl) {
 };
 
 
+/**
+ * Texture オブジェクトからボタン要素を生成して返します。
+ * @param {PIXI.Texture} texture - 通常状態のボタンを表す Texture オブジェクト
+ * @return {PIXI.Sprite} ボタン要素として設定された Sprite オブジェクト
+ */
 FrontCore.PIXI.getTextureButton = function(texture) {
+  // TODO: ボタンの各状態を表す Texture も指定できる様にする
+
   var button = new PIXI.Sprite(texture);
   button.buttonMode = true;
   button.anchor.x = 0.5;
@@ -51,21 +64,20 @@ FrontCore.PIXI.getTextureButton = function(texture) {
 
   button.hitArea = new PIXI.Rectangle(- hitWidth / 2, - hitHeight / 2, hitWidth, hitHeight);
 
-  button.mousedown = button.touchstart = function(data) {
-    TweenLite.to(button.scale, .15, { x: 0.95, y: 0.95 });
-    console.debug(button.hitArea);
+  button.mousedown = button.touchstart = function() {
+    TweenLite.to(button.scale, 0.15, { x: 0.95, y: 0.95 });
   };
 
-  button.mouseup = button.touchend = button.mouseupoutside = button.touchendoutside = function(data) {
-    TweenLite.to(button.scale, .15, { x: 1, y: 1 });
+  button.mouseup = button.touchend = button.mouseupoutside = button.touchendoutside = function() {
+    TweenLite.to(button.scale, 0.15, { x: 1, y: 1 });
   };
 
-  button.mouseover = function(data) {
-    TweenLite.to(button.scale, .15, { x: 1.05, y: 1.05 });
+  button.mouseover = function() {
+    TweenLite.to(button.scale, 0.15, { x: 1.05, y: 1.05 });
   };
 
-  button.mouseout = function(data) {
-    TweenLite.to(button.scale, .15, { x: 1, y: 1 });
+  button.mouseout = function() {
+    TweenLite.to(button.scale, 0.15, { x: 1, y: 1 });
   };
 
   return button;

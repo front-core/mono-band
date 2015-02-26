@@ -1,5 +1,3 @@
-/* global PIXI:false, TweenLite: false, TweenMax: false, FrontCore:false, MonoBand:false */
-
 'use strict';
 
 /**
@@ -35,8 +33,6 @@ MonoBand.Scenes.TopMenu.prototype.constructor = MonoBand.Scenes.TopMenu;
  */
 MonoBand.Scenes.TopMenu.prototype.load = function() {
   if(!this.isLoaded()) {
-    var suffix = window.devicePixelRatio > 1 ? '@' + Math.round(window.devicePixelRatio) + 'x' : '';
-
     this._assetLoader = new PIXI.AssetLoader([
       FrontCore.PIXI.getSuffixedImageUrl('images/logo.png'),
       FrontCore.PIXI.getSuffixedImageUrl('images/slogan.png'),
@@ -84,7 +80,7 @@ MonoBand.Scenes.TopMenu.prototype.show = function() {
 
   var timeline = new TimelineLite({ onComplete: function() {
     this.dispatchShowCompleteEvent();
-  }, onCompleteScope: this })
+  }, onCompleteScope: this });
 
   timeline.add(TweenLite.fromTo(this._logo, 0.4, { 
     alpha: 0,

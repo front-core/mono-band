@@ -1,9 +1,7 @@
-/* global PIXI:false, TweenLite: false, FrontCore:false, MonoBand:false */
-
 'use strict';
 
 /**
- * @fileoverview Intro sene.
+ * @fileoverview サンプルシーンです。
  *
  * @author heavymery@gmail.com (Shindeok Kang)
  */

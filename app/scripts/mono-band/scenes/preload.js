@@ -1,5 +1,3 @@
-/* global PIXI:false, TweenLite: false, TweenMax: false, FrontCore:false, MonoBand:false */
-
 'use strict';
 
 /**

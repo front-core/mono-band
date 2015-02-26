@@ -18,5 +18,15 @@
     "trailing": true,
     "smarttabs": true,
     "jquery": true,
-    "expr": true
+    "expr": true,
+    "globals": {
+      "PIXI": false,
+      "TweenLite": false,
+      "TweenMax": false,
+      "TimelineLite": false,
+      "TimelineMax": false,
+      "Linear": false,
+      "FrontCore": false,
+      "MonoBand": false
+    }
 }
