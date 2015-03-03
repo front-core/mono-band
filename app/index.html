@@ -112,7 +112,9 @@
   
     <!-- 外部の JS ライブラリ -->
     <!-- build:js scripts/vendor.js -->
-    <script src="bower_components/pixi.js/bin/pixi.dev.js"></script>
+    <!-- TODO: PixiJS 現行版で CocoonJS タッチ系のバグがあるっぽいので修正（PixiJS リポジトリにプルリク！） -->
+    <!-- <script src="bower_components/pixi.js/bin/pixi.dev.js"></script> -->
+    <script src="scripts/vendor/pixi.dev.js"></script>
     <script src="bower_components/gsap/src/uncompressed/TweenLite.js"></script>
     <script src="bower_components/gsap/src/uncompressed/TweenMax.js"></script>
     <script src="bower_components/gsap/src/uncompressed/TimelineLite.js"></script>

@@ -215,7 +215,8 @@ module.exports = function(grunt) {
       },
       all: {
         src: [
-          '<%= path.appScripts %>/**/*.js'
+          '<%= path.appScripts %>/**/*.js',
+          '!<%= path.appScripts %>/vendor/**/*.js'
         ]
       }
     },
