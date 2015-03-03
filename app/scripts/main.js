@@ -18,8 +18,10 @@
 
   // 端末のピクセル比に合わせて Canvas 縮小
   if(navigator.isCocoonJS) {
-    // CocoonJS ならこれでスクリーンにフィットされる
+    // ScreenCanvas（Canvas+ 用の爆速 Canvas）を オン
     canvas.screencanvas = true;
+    // CocoonJS ならこれでスクリーンにフィットされる
+    canvas.style.cssText = "ScaleAspectFit";
   } else {
     // ブラウザでは CSS Transform で縮小させる
     var canvasScale = 1 / window.devicePixelRatio;
