@@ -1,14 +1,14 @@
 'use strict';
 
 /**
- * @fileoverview TopMenu シーンを定義します。
+ * @fileoverview SelectInstrument シーンを定義します。
  *
  * @author heavymery@gmail.com (Shindeok Kang)
  */
 
 
 /**
- * 新しい TopMenu クラスのインスタンスを生成します。
+ * 新しい SelectInstrument クラスのインスタンスを生成します。
  * @constructor
  * @extends {FrontCore.Scene}
  */
@@ -105,11 +105,11 @@ MonoBand.Scenes.SelectInstrument.prototype.load = function() {
       this._showTimeline.add(TweenLite.fromTo(this._title, 0.4, { 
         alpha: 0,
         x: window.innerWidth / 2,
-        y: 0
+        y: 25
       }, { 
         alpha: 1,
         x: window.innerWidth / 2,
-        y: 100,
+        y: 50,
       }), 'titleShow');
 
       this._showTimeline.add(TweenLite.fromTo(this._guitarButton, 0.3, { 
@@ -120,8 +120,8 @@ MonoBand.Scenes.SelectInstrument.prototype.load = function() {
       }, { 
         alpha: 1,
         rotation: (360 * 4) * Math.PI/180, 
-        x: window.innerWidth / 2 - 100,
-        y: window.innerHeight / 2 - 100
+        x: window.innerWidth / 2 - window.innerWidth / 5,
+        y: window.innerHeight / 2 - window.innerWidth / 5
       }), 'guitarShow');
 
       this._showTimeline.add(TweenLite.fromTo(this._bassButton, 0.3, { 
@@ -132,8 +132,8 @@ MonoBand.Scenes.SelectInstrument.prototype.load = function() {
       }, { 
         alpha: 1,
         rotation: (-360 * 4) * Math.PI/180, 
-        x: window.innerWidth / 2 + 100,
-        y: window.innerHeight / 2 - 100
+        x: window.innerWidth / 2 + window.innerWidth / 5,
+        y: window.innerHeight / 2 - window.innerWidth / 5
       }), 'guitarShow+=0.1');
 
       this._showTimeline.add(TweenLite.fromTo(this._drumButton, 0.3, { 
@@ -144,8 +144,8 @@ MonoBand.Scenes.SelectInstrument.prototype.load = function() {
       }, { 
         alpha: 1,
         rotation: (360 * 4) * Math.PI/180, 
-        x: window.innerWidth / 2 - 100,
-        y: window.innerHeight / 2 + 100
+        x: window.innerWidth / 2 - window.innerWidth / 5,
+        y: window.innerHeight / 2 + window.innerWidth / 5
       }), 'guitarShow+=0.2');
 
       this._showTimeline.add(TweenLite.fromTo(this._keyboardButton, 0.3, { 
@@ -156,18 +156,18 @@ MonoBand.Scenes.SelectInstrument.prototype.load = function() {
       }, { 
         alpha: 1,
         rotation: (-360 * 4) * Math.PI/180, 
-        x: window.innerWidth / 2 + 100,
-        y: window.innerHeight / 2 + 100
+        x: window.innerWidth / 2 + window.innerWidth / 5,
+        y: window.innerHeight / 2 + window.innerWidth / 5
       }), 'guitarShow+=0.3');
 
         this._showTimeline.add(TweenLite.fromTo(this._backButton, 0.3, { 
           alpha: 0,
           x: window.innerWidth / 2,
-          y: window.innerHeight - 50
+          y: window.innerHeight - 25
         }, { 
           alpha: 1,
           x: window.innerWidth / 2,
-          y: window.innerHeight - 100
+          y: window.innerHeight - 50
         }));
 
 

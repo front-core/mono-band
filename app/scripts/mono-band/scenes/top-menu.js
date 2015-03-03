@@ -79,8 +79,8 @@ MonoBand.Scenes.TopMenu.prototype.load = function() {
 
       this._showTimeline.add(TweenLite.fromTo(this._logo, 0.4, { 
         alpha: 0,
-        x: window.innerWidth / 2,
-        y: 0
+        x: window.innerWidth,
+        y: 100
       }, { 
         alpha: 1,
         x: window.innerWidth / 2,
