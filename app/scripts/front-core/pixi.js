@@ -35,8 +35,8 @@ FrontCore.PIXI.getSuffixedImageUrl = function(imageUrl) {
  * @return {PIXI.Texture} Texture オブジェクト
  */
 FrontCore.PIXI.getTexture = function(imageUrl) {
-  var texture = PIXI.Texture.fromImage(
-    FrontCore.PIXI.getSuffixedImageUrl(imageUrl));
+  var texture 
+    = PIXI.Texture.fromImage(FrontCore.PIXI.getSuffixedImageUrl(imageUrl));
     
   texture.baseTexture.resolution = window.devicePixelRatio;
 
@@ -58,6 +58,7 @@ FrontCore.PIXI.getTextureButton = function(texture) {
   button.anchor.y = 0.5;
 
   button.interactive = true;
+  button.buttonMode = true;
 
   var hitWidth = texture.baseTexture.width / texture.baseTexture.resolution;
   var hitHeight = texture.baseTexture.height / texture.baseTexture.resolution;
