@@ -21,7 +21,7 @@
     // ScreenCanvas（Canvas+ 用の爆速 Canvas）を オン
     canvas.screencanvas = true;
     // CocoonJS ならこれでスクリーンにフィットされる
-    canvas.style.cssText = 'ScaleAspectFit';
+    canvas.style.cssText = 'idtkscale:ScaleToFill';
   } else {
     // ブラウザでは CSS Transform で縮小させる
     var canvasScale = 1 / window.devicePixelRatio;
