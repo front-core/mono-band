@@ -19,7 +19,7 @@
  */
 FrontCore.WebAudio.Synthesizer = function() {
 
-  this.audioContext = new webkitAudioContext();
+  this.audioContext = new window.webkitAudioContext();
 
   this.oscillator = null;
 
@@ -72,15 +72,15 @@ FrontCore.WebAudio.Synthesizer.getScaleNotes = function(scale) {
 //------------------------------------------------------------------------------
 
 FrontCore.WebAudio.Synthesizer.prototype.play = function(frequency, volume) {
-  if(typeof frequency !=== 'undefined') frequency = 440;
-  if(typeof volume !=== 'undefined') volume = 1;
+  if(typeof frequency === 'undefined') { frequency = 440; }
+  if(typeof volume === 'undefined') { volume = 1; }
 
   this.oscillator = this.audioContext.createOscillator();
   this.gain = this.audioContext.createGain();
 
   //this.oscillator.type = 'triangle';
   this.oscillator.frequency.value = frequency;
-  gain.gain.value = volume;
+  this.gain.gain.value = volume;
 
   this.gain.connect(this.audioContext.destination);
   this.oscillator.connect(this.gain);
