@@ -148,5 +148,10 @@ MonoBand.Scenes.TopMenu.prototype.hide = function() {
  * シーンの表示要素のレイアウトを更新します。
  */
 MonoBand.Scenes.TopMenu.prototype.updateLayout = function() {
-
+  this._logo.x = window.innerWidth / 2;
+  this._slogan.x = window.innerWidth / 2;
+  this._soloButton.x = window.innerWidth / 2;
+  this._soloButton.y = window.innerHeight - 150;
+  this._sessionButton.x = window.innerWidth / 2;
+  this._sessionButton.y = window.innerHeight - 100;
 };

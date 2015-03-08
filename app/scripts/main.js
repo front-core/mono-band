@@ -50,10 +50,10 @@
   sceneManager.addScene('selectInstrument', new MonoBand.Scenes.SelectInstrument());
 //   sceneManager.addScene('selectKey', new MonoBand.Scenes.SelectKey());
 //   sceneManager.addScene('selectTempo', new MonoBand.Scenes.SelectTempo());
-//   sceneManager.addScene('playGuitar', new MonoBand.Scenes.PlayGuitar());
-//   sceneManager.addScene('playBass', new MonoBand.Scenes.PlayBass());
-//   sceneManager.addScene('playKeyboard', new MonoBand.Scenes.PlayKeyboard());
-//   sceneManager.addScene('playDrum', new MonoBand.Scenes.PlayDrum());
+  sceneManager.addScene('playGuitar', new MonoBand.Scenes.PlayGuitar());
+  sceneManager.addScene('playBass', new MonoBand.Scenes.PlayBass());
+  sceneManager.addScene('playKeyboard', new MonoBand.Scenes.PlayKeyboard());
+  sceneManager.addScene('playDrum', new MonoBand.Scenes.PlayDrum());
 //   ...
 
   // プレローディング用のシーンを設定
@@ -95,6 +95,7 @@
   // プレローディング用のシーンをロード
   sceneManager.preloadScene.load();
 
+  var updateLayoutTimer;
 
   // Window がリサイズされた時の処理
   window.addEventListener('resize', function() {
@@ -104,9 +105,16 @@
     renderer.resize(window.innerWidth, window.innerHeight);
 
     // TODO: SceneManager に持たせて方が良い？
-    if(sceneManager.getCurrentScene()) {
-      sceneManager.getCurrentScene().updateLayout();
+    if(updateLayoutTimer) {
+      clearTimeout(updateLayoutTimer);
     }
+
+    updateLayoutTimer = setTimeout(function() {
+//       console.debug('updateLayout');
+      if(sceneManager.getCurrentScene()) {
+        sceneManager.getCurrentScene().updateLayout();
+      }
+    }, 100);
   }, false);
 
 
@@ -127,9 +135,17 @@
     renderer.resize(window.innerWidth, window.innerHeight);
 
     // TODO: SceneManager に持たせて方が良い？
-    if(sceneManager.getCurrentScene()) {
-      sceneManager.getCurrentScene().updateLayout();
+    if(updateLayoutTimer) {
+      clearTimeout(updateLayoutTimer);
     }
+
+    updateLayoutTimer = setTimeout(function() {
+//       console.debug('updateLayout');
+      if(sceneManager.getCurrentScene()) {
+        sceneManager.getCurrentScene().updateLayout();
+      }
+    }, 100);
+
   }, false);
 
 })();

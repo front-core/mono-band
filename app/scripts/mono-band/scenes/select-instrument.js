@@ -58,21 +58,33 @@ MonoBand.Scenes.SelectInstrument.prototype.load = function() {
       this._guitarButton.anchor.x = 0.5;
       this._guitarButton.anchor.y = 0.5;
       this._guitarButton.alpha = 0;
+      this._guitarButton.click = this._guitarButton.tap = function() {
+        this.sceneManager.gotoScene('playGuitar');
+      }.bind(this);
 
       this._bassButton = FrontCore.PIXI.getTextureButton(FrontCore.PIXI.getTexture('images/select-instrument-bass.png'));
       this._bassButton.anchor.x = 0.5;
       this._bassButton.anchor.y = 0.5;
       this._bassButton.alpha = 0;
+      this._bassButton.click = this._bassButton.tap = function() {
+        this.sceneManager.gotoScene('playBass');
+      }.bind(this);
 
       this._drumButton = FrontCore.PIXI.getTextureButton(FrontCore.PIXI.getTexture('images/select-instrument-drum.png'));
       this._drumButton.anchor.x = 0.5;
       this._drumButton.anchor.y = 0.5;
       this._drumButton.alpha = 0;
+      this._drumButton.click = this._drumButton.tap = function() {
+        this.sceneManager.gotoScene('playDrum');
+      }.bind(this);
 
       this._keyboardButton = FrontCore.PIXI.getTextureButton(FrontCore.PIXI.getTexture('images/select-instrument-keyboard.png'));
       this._keyboardButton.anchor.x = 0.5;
       this._keyboardButton.anchor.y = 0.5;
       this._keyboardButton.alpha = 0;
+      this._keyboardButton.click = this._keyboardButton.tap = function() {
+        this.sceneManager.gotoScene('playKeyboard');
+      }.bind(this);
 
 
       this._backButton = FrontCore.PIXI.getTextureButton(FrontCore.PIXI.getTexture('images/back-button.png'));
@@ -202,5 +214,15 @@ MonoBand.Scenes.SelectInstrument.prototype.hide = function() {
  * シーンの表示要素のレイアウトを更新します。
  */
 MonoBand.Scenes.SelectInstrument.prototype.updateLayout = function() {
-
+  this._title.x = window.innerWidth / 2;
+  this._guitarButton.x = window.innerWidth / 2 - window.innerWidth / 5;
+  this._guitarButton.y = window.innerHeight / 2 - window.innerWidth / 5;
+  this._bassButton.x = window.innerWidth / 2 + window.innerWidth / 5;
+  this._bassButton.y = window.innerHeight / 2 - window.innerWidth / 5;
+  this._drumButton.x = window.innerWidth / 2 - window.innerWidth / 5;
+  this._drumButton.y = window.innerHeight / 2 + window.innerWidth / 5;
+  this._keyboardButton.x = window.innerWidth / 2 + window.innerWidth / 5;
+  this._keyboardButton.y = window.innerHeight / 2 + window.innerWidth / 5;
+  this._backButton.x = window.innerWidth / 2;
+  this._backButton.y = window.innerHeight - 50;
 };
