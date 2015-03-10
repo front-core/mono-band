@@ -21,6 +21,7 @@ MonoBand.Scenes.PlayGuitar = function() {
 
   this._showTimeline;
 
+  this._guitar = new MonoBand.Instruments.Guitar();
 };
 MonoBand.Scenes.PlayGuitar.prototype = Object.create(FrontCore.Scene.prototype);
 MonoBand.Scenes.PlayGuitar.prototype.constructor = MonoBand.Scenes.PlayGuitar;
@@ -67,11 +68,16 @@ MonoBand.Scenes.PlayGuitar.prototype.load = function() {
         y: window.innerHeight - 50
       }));
 
+      this._guitar.addEventListener(
+        MonoBand.Instruments.EventType.LOAD_COMPLETE, function() {
+          // 遅延テスト
+          setTimeout(function() {
+            this.dispatchLoadCompleteEvent();
+          }.bind(this), 1000);
+        }.bind(this), true);
+        
+      this._guitar.load();
 
-      // 遅延テスト
-      setTimeout(function() {
-        this.dispatchLoadCompleteEvent();
-      }.bind(this), 1000);
     }.bind(this));
 
     this._assetLoader.load();
