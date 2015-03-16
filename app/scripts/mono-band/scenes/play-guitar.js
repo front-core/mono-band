@@ -42,6 +42,7 @@ MonoBand.Scenes.PlayGuitar.prototype.load = function() {
       this._backButton.anchor.y = 0.5;
       this._backButton.alpha = 0;
       this._backButton.click = this._backButton.tap = function() {
+        this._guitar._powerChordSamplayer.noteOn('C', 4);
         this.sceneManager.gotoScene('selectInstrument');
       }.bind(this);
 
@@ -70,6 +71,7 @@ MonoBand.Scenes.PlayGuitar.prototype.load = function() {
 
       this._guitar.addEventListener(
         MonoBand.Instruments.EventType.LOAD_COMPLETE, function() {
+
           // 遅延テスト
           setTimeout(function() {
             this.dispatchLoadCompleteEvent();

@@ -97,7 +97,11 @@
     <!-- /スプラッシュスクリーン -->
 
     <script>
-      if(navigator.isCocoonJS) {
+      // TODO: WebView+ だと isCocoonJS 判定されないっぽい
+//       var showSplashScreen = !navigator.isCocoonJS;
+      var showSplashScreen = false;
+      
+      if(!showSplashScreen) {
         // CocoonJS だったらスプラッシュスクリーンは要らない
         document.body.removeChild(document.getElementById('splash-screen'));
       } else {
@@ -115,9 +119,9 @@
     <!-- TODO: PixiJS 現行版で CocoonJS タッチ系のバグがあるっぽいので修正（PixiJS リポジトリにプルリク！） -->
     <!-- <script src="bower_components/pixi.js/bin/pixi.dev.js"></script> -->
     <script src="scripts/vendor/pixi.dev.js"></script>
-    <script src="bower_components/gsap/src/uncompressed/TweenLite.js"></script>
+<!--     <script src="bower_components/gsap/src/uncompressed/TweenLite.js"></script> -->
     <script src="bower_components/gsap/src/uncompressed/TweenMax.js"></script>
-    <script src="bower_components/gsap/src/uncompressed/TimelineLite.js"></script>
+<!--     <script src="bower_components/gsap/src/uncompressed/TimelineLite.js"></script> -->
     <script src="bower_components/gsap/src/uncompressed/timelineMax.js"></script>
     <!-- endbuild -->
     <!-- /外部の JS ライブラリ -->
@@ -153,7 +157,7 @@
     <script src="scripts/mono-band/scenes/session-menu.js"></script>
     <script src="scripts/mono-band/scenes/session-code.js"></script>
     <script src="scripts/mono-band/scenes/session-lobby.js"></script>
-    <script src="scripts/mono-band/instrument.js"></script>
+    <script src="scripts/mono-band/instruments.js"></script>
     <script src="scripts/mono-band/instruments/guitar.js"></script>
     <script src="scripts/mono-band/instruments/bass.js"></script>
     <script src="scripts/mono-band/instruments/drum.js"></script>

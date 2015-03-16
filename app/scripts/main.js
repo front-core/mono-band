@@ -68,15 +68,14 @@
   sceneManager.preloadScene.addEventListener(
    FrontCore.Scene.EventType.LOAD_COMPLETE, function() {
 
-    if(!navigator.isCocoonJS) {
+    if(showSplashScreen) {
       // ブラウザで実行される時はスプラッシュスクリーンを非表示してから
       
       var fadeTime = 600; // スプラッシュスクリーンのフェードアウト時間
       var displayTime = 600; // スプラッシュスクリーンを表示させる最低限の時間
 
-      // TODO: スクリプトが既にキャッシュされてたらスプラッシュスクリーンが一瞬で消えてしまうのでちょっと待たせる
-//       var splashDelay = displayTime + fadeTime - (Date.now() - window.splashImageShownTime);
-      var splashDelay = 0;
+      // スクリプトが既にキャッシュされてたらスプラッシュスクリーンが一瞬で消えてしまうのでちょっと待たせる
+      var splashDelay = displayTime + fadeTime - (Date.now() - window.splashImageShownTime);
 
       setTimeout(function() {
         document.getElementById('splash-screen').classList.add('hide');

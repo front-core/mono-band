@@ -50,10 +50,14 @@ MonoBand.Scenes.Preload.prototype.load = function() {
 
       this._showTimeline = new TimelineLite({ 
         paused: true,
+        onStart: function() {
+          this._rotationTween.play();
+        }, onStartScope: this,
         onComplete: function() {
           this.dispatchShowCompleteEvent();
         }, onCompleteScope: this,
         onReverseComplete: function() {
+          this._rotationTween.pause();
           this.dispatchHideCompleteEvent();
         }, onReverseCompleteScope: this 
       });
@@ -80,7 +84,6 @@ MonoBand.Scenes.Preload.prototype.load = function() {
  * シーンの表示要素を表示します。
  */
 MonoBand.Scenes.Preload.prototype.show = function() {
-  this._rotationTween.play();
   this._showTimeline.play();
 };
 
@@ -89,7 +92,6 @@ MonoBand.Scenes.Preload.prototype.show = function() {
  * シーンの表示要素を非表示します。
  */
 MonoBand.Scenes.Preload.prototype.hide = function() {
-  this._rotationTween.pause();
   this._showTimeline.reverse();
 };
 

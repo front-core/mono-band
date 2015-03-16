@@ -18,6 +18,7 @@
  * @extends {FrontCore.EventDispatcher}
  */
 FrontCore.WebAudio.SamplePlayer = function(audioContext, destination) {
+  FrontCore.EventDispatcher.call(this);
 
   this.audioContext = audioContext;
 
@@ -57,6 +58,8 @@ FrontCore.WebAudio.SamplePlayer.prototype.noteOn = function(note, octave, veloci
 
   this._audios[noteNumber] = this.audioContext.createBufferSource();
 
+  if(this.samples.length < 1) return;
+
   // 複数のサンプルから、ノート番号の一番近いサンプルを探す
   var targetSample;
   var sampleDistance = 12;
@@ -68,6 +71,10 @@ FrontCore.WebAudio.SamplePlayer.prototype.noteOn = function(note, octave, veloci
       sampleDistance = distance;
       targetSample = sample;
     }
+  }
+
+  if(!targetSample) {
+    targetSample = this.samples[0];
   }
   
   this._audios[noteNumber].buffer = targetSample.soundBuffer;
@@ -94,15 +101,15 @@ FrontCore.WebAudio.SamplePlayer.prototype.loadSamples = function(sampleURLs) {
   this.samples = [];
 
   for(var i = 0; i < sampleURLs.length; i++) {
-
+    var requestURL = encodeURI(sampleURLs[i]);
     var request = new XMLHttpRequest();
-    request.open('GET', encodeURIComponent(sampleURLs[i]), true);
+    request.open('GET', requestURL, true);
     request.responseType = 'arraybuffer';
 
     request.onload = function(event) { 
       this.audioContext.decodeAudioData(event.target.response, function(buffer) {
 
-        var responseURL = decodeURIComponent(event.target.responseURL);
+        var responseURL = decodeURI(requestURL);
 
         var urlMatch = responseURL.match(/.*[-_]([A-G][#]?)(\d)\.wav/);
         if(!urlMatch || urlMatch.length < 3) {
@@ -115,6 +122,9 @@ FrontCore.WebAudio.SamplePlayer.prototype.loadSamples = function(sampleURLs) {
           noteNumber: noteNumber,
           soundBuffer: buffer
         });
+
+        // TODO: すべてのサンプルがロード完了したらイベント発行
+        this.dispatchEvent('loadComplete');
       }.bind(this), function(error) {
         console.error(error);
       });
