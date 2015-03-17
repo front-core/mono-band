@@ -211,6 +211,7 @@ module.exports = function(grunt) {
     jshint: {
       options: {
         jshintrc: '.jshintrc',
+        force: true,
         reporter: require('jshint-stylish')
       },
       all: {
@@ -242,9 +243,9 @@ module.exports = function(grunt) {
     jsdoc : {
       dist : {
         src: [
-          '<%= path.appScripts %>/**/*.js', 
+          '<%= path.appScripts %>/**/*.js',
           // 'README.md'
-        ], 
+        ],
         options: {
           destination: grunt.config('path.doc'),
           template : "jsdoc-template",
@@ -326,7 +327,7 @@ module.exports = function(grunt) {
       'embedImage:dist',
       'useminPrepare',
       'concat',
-      'filerev:images',
+      // 'filerev:images', // TODO: JS で読み込んでる所のパスが変わらん・・・
       'usemin:js',
       'uglify',
       'filerev:scripts',
